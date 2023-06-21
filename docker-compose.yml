@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  servidor:
+    container_name: mi-server
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase
+    depends_on:
+      - mongodb
+    volumes:
+      - ./app-mongo:/app-mongo
+
+  mongodb:
+    container_name: mi-db
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
